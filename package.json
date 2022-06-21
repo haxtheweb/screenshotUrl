@@ -6,7 +6,7 @@
     "puppeteer-core": "13.5.2",
     "chrome-aws-lambda": "10.1.0"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "puppeteer": "^10.1.0"
   }
 }
