@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     // capture options
     var browserGoToOptions = {
-      timeout: 10000,
+      timeout: 60000,
       waitUntil: 'networkidle2',
     };
     var screenshotOptions = {
