@@ -2,7 +2,7 @@
   "type": "module",
   "name": "vercel-api-lrnwebcomponents",
   "dependencies": {
-    "node-fetch": "3.2.4",
+    "node-fetch": "3.2.10",
     "puppeteer-core": "13.5.2",
     "chrome-aws-lambda": "10.1.0"
   },
