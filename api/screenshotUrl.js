@@ -4,8 +4,21 @@ import { stdResponse, invalidRequest, stdPostBody } from "../requestHelpers.js";
 // this requires its own service instance and can't live with the monorepo
 // due to the size of the dependencies involved
 export default async function handler(req, res) {
-  const body = stdPostBody(req);
-  const urlToCapture = body.urlToCapture;
+  var urlToCapture;
+  var quality = 75;
+  if (req.query && req.query.urlToCapture) {
+    urlToCapture = req.urlToCapture;
+    if (req.query.quality) {
+      quality = parseInt(req.quality);
+    }
+  }
+  else {
+    body = stdPostBody(req);
+    urlToCapture = body.urlToCapture;
+    if (body.quality) {
+      quality = parseInt(body.quality);
+    }
+  }
   // Perform URL validation
   if (!urlToCapture || !urlToCapture.trim()) {
     res = invalidRequest(res, 'enter a valid url');
@@ -22,7 +35,7 @@ export default async function handler(req, res) {
       waitUntil: 'networkidle2',
     };
     var screenshotOptions = {
-      quality: body.quality ? parseInt(body.quality) : 75,
+      quality: quality,
       type: 'jpeg',
       encoding: "base64"
     };
@@ -48,7 +61,7 @@ export default async function handler(req, res) {
           image: base64
         }, {
           methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-          cache: 1800
+          cache: 3600
         }
       );
     } catch (error) {
