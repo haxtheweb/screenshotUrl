@@ -6,10 +6,14 @@ import { stdResponse, invalidRequest, stdPostBody } from "../requestHelpers.js";
 export default async function handler(req, res) {
   var urlToCapture;
   var quality = 75;
+  var render = 'json';
   if (req.query && req.query.urlToCapture) {
-    urlToCapture = req.urlToCapture;
+    urlToCapture = req.query.urlToCapture;
     if (req.query.quality) {
-      quality = parseInt(req.quality);
+      quality = parseInt(req.query.quality);
+    }
+    if (req.query.render) {
+      render = req.query.render;
     }
   }
   else {
@@ -17,6 +21,9 @@ export default async function handler(req, res) {
     urlToCapture = body.urlToCapture;
     if (body.quality) {
       quality = parseInt(body.quality);
+    }
+    if (body.render) {
+      render = body.render;
     }
   }
   // Perform URL validation
@@ -37,9 +44,9 @@ export default async function handler(req, res) {
     var screenshotOptions = {
       quality: quality,
       type: 'jpeg',
-      encoding: "base64"
+      encoding: render == 'img' ? 'binary' : 'base64'
     };
-    var base64 = '';
+    var screenShot = '';
     let browser = null
     try {
       browser = await getBrowserInstance();
@@ -49,21 +56,27 @@ export default async function handler(req, res) {
       if (urlToCapture.includes('twitter.com')) {
         await page.waitForSelector("article[data-testid='tweet']");
         const element = await page.$("article[data-testid='tweet']");
-        base64 = await element.screenshot(screenshotOptions);
+        screenShot = await element.screenshot(screenshotOptions);
       }
       else {
         screenshotOptions.fullPage = true;
-        base64 = await page.screenshot(screenshotOptions);
+        screenShot = await page.screenshot(screenshotOptions);
       }
-      res = stdResponse(res,
-        {
-          url: urlToCapture,
-          image: base64
-        }, {
-          methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-          cache: 3600
-        }
-      );
+      // json or direct response w/ the media in question
+      if (render == 'img') {
+        stdResponse(res,screenShot,{cache: 3600, type:'image/jpeg'});
+      }
+      else {
+        res = stdResponse(res,
+          {
+            url: urlToCapture,
+            image: screenShot
+          }, {
+            methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+            cache: 3600
+          }
+        );
+      }
     } catch (error) {
         console.log(error)
         res = invalidRequest(res, 'something went wrong', 500);

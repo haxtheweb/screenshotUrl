@@ -36,7 +36,7 @@ export function stdResponse(res, data = {}, respOptions = {}) {
   res.setHeader("Access-Control-Allow-Headers", headers.headers);
   // cache is opt in but also support buster flag to ensure we force NOT hitting a cache
   if (headers.cache && headers.cache !== 'bust') {
-    res.setHeader('Cache-Control', `max-age=0, s-maxage=${headers.cache}`);
+    res.setHeader('Cache-Control', `max-age=0, s-maxage=${headers.cache}, stale-while-revalidate=${headers.cache}`);
   }
   // support non-json based responses. If type is set for content type
   // then we just send the status / data in the format provided

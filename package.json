@@ -1,12 +1,16 @@
 {
   "type": "module",
   "name": "vercel-api-lrnwebcomponents",
+  "scripts": {
+    "start": "web-dev-server"
+  },
   "dependencies": {
     "node-fetch": "3.2.10",
     "puppeteer-core": "13.5.2",
     "chrome-aws-lambda": "10.1.0"
   },
   "devDependencies": {
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^10.1.0",
+    "@web/dev-server": "0.1.34"
   }
 }
