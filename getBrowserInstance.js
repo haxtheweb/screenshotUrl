@@ -8,6 +8,7 @@ export async function getBrowserInstance() {
       return m.default;
     });
 		return await puppeteer.launch({
+			ignoreDefaultArgs: ['--disable-extensions'],
 			args: chromium.args,
 			headless: true,
 			defaultViewport: {
@@ -17,7 +18,6 @@ export async function getBrowserInstance() {
 			ignoreHTTPSErrors: true
 		});
 	}
-
 	return await chromium.puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
