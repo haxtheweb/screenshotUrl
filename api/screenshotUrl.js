@@ -46,6 +46,7 @@ export default async function handler(req, res) {
       type: 'jpeg',
       encoding: render == 'img' ? 'binary' : 'base64'
     };
+    await puppeteer.launch({ignoreDefaultArgs: ['--disable-extensions']})
     var screenShot = '';
     let browser = null
     try {

@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "puppeteer-core": "21.4.1",
-    "chrome-aws-lambda": "10.1.0"
+    "@sparticuz/chromium": "118.0.0"
   },
   "devDependencies": {
     "puppeteer": "21.4.1",

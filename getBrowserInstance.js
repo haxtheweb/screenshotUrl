@@ -1,4 +1,4 @@
-import chromium from 'chrome-aws-lambda'
+import chromium from '@sparticuz/chromium'
 
 export async function getBrowserInstance() {
 	const executablePath = await chromium.executablePath
