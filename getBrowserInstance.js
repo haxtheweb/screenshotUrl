@@ -10,7 +10,7 @@ export async function getBrowserInstance() {
 		return await puppeteer.launch({
 			ignoreDefaultArgs: ['--disable-extensions'],
 			args: chromium.args,
-			headless: true,
+			headless: "new",
 			defaultViewport: {
 				width: 1280,
 				height: 720
