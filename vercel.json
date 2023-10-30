@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/screenshotUrl.js": {
+    "api/screenshotUrl.js":{
       "memory": 3008,
       "maxDuration": 300
     }
