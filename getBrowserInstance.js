@@ -12,15 +12,18 @@ export async function getBrowserInstance() {
 			args: chromium.args,
 			headless: "new",
 			defaultViewport: {
-				width: 1280,
-				height: 720
+				width: 1368,
+				height: 768
 			},
 			ignoreHTTPSErrors: true
 		});
 	}
 	return await puppeteer.launch({
 		args: chromium.args,
-		defaultViewport: chromium.defaultViewport,
+		defaultViewport: {
+			width: 1368,
+			height: 768
+		},
 		executablePath: executablePath,
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true

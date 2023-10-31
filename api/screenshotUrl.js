@@ -5,7 +5,7 @@ import { stdResponse, invalidRequest, stdPostBody } from "../requestHelpers.js";
 // due to the size of the dependencies involved
 export default async function handler(req, res) {
   var urlToCapture;
-  var quality = 75;
+  var quality = 70;
   var render = 'json';
   if (req.query && req.query.urlToCapture) {
     urlToCapture = req.query.urlToCapture;
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
     // capture options
     var browserGoToOptions = {
-      timeout: 60000,
+      timeout: 30000,
       waitUntil: 'networkidle2',
     };
     var screenshotOptions = {
@@ -64,7 +64,7 @@ export default async function handler(req, res) {
       }
       // json or direct response w/ the media in question
       if (render == 'img') {
-        stdResponse(res,screenShot,{cache: 3600, type:'image/jpeg'});
+        stdResponse(res,screenShot,{cache: 86400, type:'image/jpeg'});
       }
       else {
         res = stdResponse(res,
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
             image: screenShot
           }, {
             methods: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-            cache: 3600
+            cache: 86400
           }
         );
       }
