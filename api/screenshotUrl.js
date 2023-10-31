@@ -62,6 +62,9 @@ export default async function handler(req, res) {
         screenshotOptions.fullPage = false; // this causes issues on long pages
         screenShot = await page.screenshot(screenshotOptions);
       }
+      if (browser !== null) {
+        await browser.close()
+      }
       // json or direct response w/ the media in question
       if (render == 'img') {
         stdResponse(res,screenShot,{cache: 86400, type:'image/jpeg'});
@@ -80,10 +83,6 @@ export default async function handler(req, res) {
     } catch (error) {
         console.log(error)
         res = invalidRequest(res, 'something went wrong', 500);
-    } finally {
-        if (browser !== null) {
-            // await browser.close()
-        }
     }
   }
 }
