@@ -10,7 +10,7 @@ export async function getBrowserInstance() {
 		return await puppeteerLocal.launch({
 			ignoreDefaultArgs: ['--disable-extensions'],
 			args: chromium.args,
-			headless: "new",
+			headless: true,
 			defaultViewport: {
 				width: 1368,
 				height: 768
@@ -18,6 +18,8 @@ export async function getBrowserInstance() {
 			ignoreHTTPSErrors: true
 		});
 	}
+	// Optional: If you'd like to disable webgl, true is the default.
+	chromium.setGraphicsMode = false;
 	return await puppeteer.launch({
 		args: chromium.args,
 		defaultViewport: {
@@ -25,7 +27,7 @@ export async function getBrowserInstance() {
 			height: 768
 		},
 		executablePath: executablePath,
-		headless: chromium.headless,
+		headless: true,
 		ignoreHTTPSErrors: true
 	});
 }
