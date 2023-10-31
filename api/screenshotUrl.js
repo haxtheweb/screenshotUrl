@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
     // capture options
     var browserGoToOptions = {
-      timeout: 30000,
+      timeout: 120000,
       waitUntil: 'networkidle2',
     };
     var screenshotOptions = {
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
         res = invalidRequest(res, 'something went wrong', 500);
     } finally {
         if (browser !== null) {
-            await browser.close()
+            // await browser.close()
         }
     }
   }
