@@ -1,13 +1,13 @@
 import chromium from '@sparticuz/chromium'
-
+import puppeteer from "puppeteer-core";
 export async function getBrowserInstance() {
-	const executablePath = await chromium.executablePath
+	const executablePath = await chromium.executablePath();
 	if (!executablePath) {
 		// running locally
-		const puppeteer = await import('puppeteer').then((m) => {
+		const puppeteerLocal = await import('puppeteer').then((m) => {
       return m.default;
     });
-		return await puppeteer.launch({
+		return await puppeteerLocal.launch({
 			ignoreDefaultArgs: ['--disable-extensions'],
 			args: chromium.args,
 			headless: "new",
@@ -18,10 +18,10 @@ export async function getBrowserInstance() {
 			ignoreHTTPSErrors: true
 		});
 	}
-	return await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: executablePath,
+	return await puppeteer.launch({
+		args: chromium.args,
+		defaultViewport: chromium.defaultViewport,
+		executablePath: executablePath,
 		headless: chromium.headless,
 		ignoreHTTPSErrors: true
 	});
