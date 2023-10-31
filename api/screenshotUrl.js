@@ -59,7 +59,7 @@ export default async function handler(req, res) {
         screenShot = await element.screenshot(screenshotOptions);
       }
       else {
-        screenshotOptions.fullPage = true;
+        screenshotOptions.fullPage = false; // this causes issues on long pages
         screenShot = await page.screenshot(screenshotOptions);
       }
       // json or direct response w/ the media in question
