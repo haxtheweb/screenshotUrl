@@ -6,6 +6,8 @@ import { stdResponse, invalidRequest, stdPostBody } from "../requestHelpers.js";
 export default async function handler(req, res) {
   var urlToCapture;
   var quality = 70;
+  var height = 800;
+  var width = 600;
   var render = 'json';
   if (req.query && req.query.urlToCapture) {
     urlToCapture = req.query.urlToCapture;
@@ -14,6 +16,12 @@ export default async function handler(req, res) {
     }
     if (req.query.render) {
       render = req.query.render;
+    }
+    if (req.query.height) {
+      height = parseInt(req.query.height);
+    }
+    if (req.query.width) {
+      width = parseInt(req.query.width);
     }
   }
   else {
@@ -24,6 +32,12 @@ export default async function handler(req, res) {
     }
     if (body.render) {
       render = body.render;
+    }
+    if (body.height) {
+      height = parseInt(body.height);
+    }
+    if (body.width) {
+      width = parseInt(body.width);
     }
   }
   // Perform URL validation
@@ -51,6 +65,12 @@ export default async function handler(req, res) {
     try {
       browser = await getBrowserInstance();
       let page = await browser.newPage();
+      // set the viewport size
+      await page.setViewport({
+        width: width,
+        height: height,
+        deviceScaleFactor: 1,
+      });
       await page.goto(urlToCapture, browserGoToOptions);
       // special support for isolating a tweet
       if (urlToCapture.includes('twitter.com')) {
